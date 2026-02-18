@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Address{% endblock title %}
+
+{% block main-content %}
+<div class="container my-3">
+    <div class="row mb-2">
+        <h4 class="mb-1">
+            Welcome
+            <span class="text-capitalize">{{ request.user }}</span>
+        </h4>
+    </div>
+
+    <div class="row">
+        <!-- LEFT SIDEBAR -->
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled mb-1">
+                <li class="d-grid mb-1">
+                    <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-primary">
+                        Profile
+                    </a>
+                </li>
+                <li class="d-grid">
+                    <a href="{% url 'address' %}" class="btn btn-sm btn-primary">
+                        Address
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="col-sm-8 offset-sm-1">
+            <div class="row">
+                {% for ad in add %}
+                <div class="col-sm-6 mb-2">
+                    <div class="card">
+                        <div class="card-body py-2">
+                            <h6 class="mb-2">
+                                Address {{ forloop.counter }}
+                            </h6>
+
+                            <p class="mb-1"><strong>Name:</strong> {{ ad.name }}</p>
+                            <p class="mb-1"><strong>Locality:</strong> {{ ad.locality }}</p>
+                            <p class="mb-1"><strong>Mobile:</strong> {{ ad.mobile }}</p>
+                            <p class="mb-1"><strong>City:</strong> {{ ad.city }}</p>
+                            <p class="mb-1"><strong>State:</strong> {{ ad.state }}</p>
+                            <p class="mb-0"><strong>Pincode:</strong> {{ ad.zipcode }}</p>
+                            <p class="text-center"><a href="{% url 'updateAddress' pk=ad.id %}" 
+                            type="button" class="btn btn-success">Update</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No address found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

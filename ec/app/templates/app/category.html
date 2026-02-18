@@ -1,0 +1,70 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Category{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+  <div class="row">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="col-lg-3 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header fw-bold">
+          Categories
+        </div>
+        <div class="list-group list-group-flush">
+          {% for val in title %}
+          <a href="{% url 'category-title' val.title %}"
+             class="list-group-item list-group-item-action">
+            {{ val.title }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="col-lg-9">
+      <div class="row g-4">
+
+        {% for prod in product %}
+        <div class="col-12 col-sm-6 col-lg-4">
+
+          <div class="product-card h-100">
+
+            <a href="{% url 'product-detail' prod.id %}"
+               class="text-decoration-none text-dark">
+
+              <div class="product-img-box">
+                <img src="{{ prod.product_image.url }}"
+                     class="product-grid-img"
+                     alt="{{ prod.title }}">
+              </div>
+
+              <div class="product-info">
+                <h6 class="product-title">{{ prod.title }}</h6>
+
+                <div class="price-box">
+                  <span class="new-price">
+                    Rs. {{ prod.discounted_price }}/-
+                  </span><br>
+                  <span class="old-price">
+                    Rs. {{ prod.selling_price }}
+                  </span>
+                </div>
+              </div>
+
+            </a>
+
+          </div>
+
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock main-content %}

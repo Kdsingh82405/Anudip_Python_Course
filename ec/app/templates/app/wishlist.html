@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Wishlist{% endblock title %}
+
+{% block main-content %}
+<div class="container my-4">
+  <h3 class="text-center mb-3">My Wishlist</h3>
+
+  <div class="row">
+    {% if wishlist_items %}
+      {% for item in wishlist_items %}
+        <div class="col-sm-4 mb-3 text-center">
+          <div class="card shadow-sm p-2">
+
+            <img src="{{ item.product.product_image.url }}"
+                 class="img-fluid mb-2"
+                 style="height:160px; object-fit:contain;"
+                 alt="{{ item.product.title }}">
+
+            <h6 class="mb-1">{{ item.product.title }}</h6>
+
+            <p class="text-danger fw-bold mb-1">
+              Rs. {{ item.product.discounted_price }}
+              <small class="text-muted text-decoration-line-through">
+                {{ item.product.selling_price }}
+              </small>
+            </p>
+
+            <a href="{% url 'product-detail' item.product.id %}"
+               class="btn btn-primary btn-sm mb-1">
+              View Product
+            </a>
+
+            <button
+              class="btn btn-danger btn-sm remove-wishlist"
+              data-id="{{ item.product.id }}">
+              Remove
+            </button>
+
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-center">Your wishlist is empty ❤️</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+document.querySelectorAll(".remove-wishlist").forEach(button => {
+  button.addEventListener("click", function () {
+    let prod_id = this.getAttribute("data-id");
+
+    fetch(`/minuswishlist/?prod_id=${prod_id}`)
+      .then(response => response.json())
+      .then(data => location.reload());
+  });
+});
+</script>
+{% endblock main-content %}
