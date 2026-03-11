@@ -1,4 +1,4 @@
-# 🛒 Django E-commerce Web Application
+# 🛒 # KDMilk – Django-Based Dairy Products E-Commerce Web Application
 
 ## 📌 Project Overview
 
